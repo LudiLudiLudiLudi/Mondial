@@ -21,7 +21,7 @@
 - **תפעול:** Docker עצמאי, `.venv` נפרד, `git init` חדש, README עצמאי, ניתן להעברה למחשב אחר.
 - **אילוץ קוד:** **אין נתיבים מוחלטים בקוד** — רק `Path(__file__)` או משתני סביבה.
   `BASE_DIR = Path(__file__).resolve().parent.parent`.
-- **REST API:** JSON over HTTP, מבנה מודולרי, קוד פשוט וקריא.
+- **Server endpoints:** Flask routes פנימיים בלבד (JSON/HTML), מבנה מודולרי, קוד פשוט וקריא. **אין API חיצוני.**
 
 ## 3. מבנה תיקיות
 
@@ -82,10 +82,11 @@ mondial2026-family-pool/
 `next_match_id` (nullable), `next_slot` (nullable: `home`/`away`).
 
 ### Prediction
-`id`, `user_id`, `match_id`, `pred_home`, `pred_away`,
+`id`, `tournament_user_id` (FK → TournamentUser), `match_id`, `pred_home`, `pred_away`,
 `pred_advancing_side` (nullable: `home`/`away` — נוקאאוט בלבד),
 `updated_at`, `locked_at`, `score_awarded`, `scored_at`, `config_id_used` (FK → ScoringConfig).
-ייחודי לכל `(user_id, match_id)`. **אין שורה = אין ניחוש = 0 נק'.**
+ייחודי לכל `(tournament_user_id, match_id)`. **אין שורה = אין ניחוש = 0 נק'.**
+הניחוש מצביע על `TournamentUser` (החברות בטורניר), לא על `User` הגלובלי.
 
 ### ScoringConfig
 `id`, `tournament_id`, `name`, `effective_from` (timestamp — לאי-רטרואקטיביות), `params` (JSON).
@@ -122,7 +123,12 @@ audit לחישוב-מחדש. `id`, `tournament_id`, `config_id`, `started_at`, `
 **קידום אוטומטי:** כשמנהל מזין תוצאת `M73`, השם של העולה נכתב ל-`Match[next_match_id]` לפי `next_slot`.
 זה **לא** עץ דינמי — המבנה קבוע; רק שם הנבחרת זולג קדימה לאורך הצינור הקבוע.
 
-**seeding שלב בתים → r32:** דירוג הבתים מחושב ב-`leaderboard_service`; slots של מקום 1/2 בכל בית (`slot:1A`, `slot:2B`) מתמלאים אוטומטית מהדירוג. שיבוץ מקומות שלישיים (`slot:3rd-…`) — לפי טבלת קומבינציות סטטית ב-JSON, באישור מנהל (מסך אחד), כי הוא תלוי באילו שלישיות העפילו.
+**seeding שלב בתים → r32 — אוטומטי מלא, ללא אישור מנהל:**
+חוקי FIFA 2026 ממומשים במלואם וחד-פעמית בקובץ ה-JSON + לוגיקה ב-`tournament_service`:
+1. דירוג בתים (`leaderboard_service`): נקודות → הפרש שערים → שערי זכות → תוצאות הדדיות → סדר קבוע (fallback דטרמיניסטי במקום הגרלה, לא נשארת אקראיות).
+2. מקומות 1/2 בכל בית ממלאים את slots `slot:1A`/`slot:2B` אוטומטית.
+3. 8 השלישיים הטובים נבחרים בין כל הבתים; השיבוץ ל-slots `slot:3rd-…` לפי **טבלת הקומבינציות הרשמית של FIFA** (סטטית ב-JSON, לוקאפ לפי קבוצת ששת/שמונת הבתים שהעפילו שלישיהם).
+4. אין אישור מנהל ואין עריכה ידנית — המנהל **מזין תוצאות בלבד**; ההעפלה והשיבוץ קורים אוטומטית.
 
 ## 6. מנוע הניקוד
 
@@ -211,27 +217,30 @@ audit לחישוב-מחדש. `id`, `tournament_id`, `config_id`, `started_at`, `
   > במשחקי נוקאאוט ניתן לבחור בנפרד מי תעלה שלב במקרה של הארכה או פנדלים."
 - מצב ילד: שפה פשוטה יותר לאותה פעולה.
 
-## 10. משטח ה-REST API (ראשוני)
+## 10. Server endpoints (Flask routes פנימיים)
+
+לא API חיצוני — routes פנימיים שמגישים HTML/JSON לאותה אפליקציה. גבול ברור: מסכים + endpoints + services פנימיים.
 
 ```
-POST /api/join                 # invite_code + display_name → user + session
-POST /api/login                # join_code → session
-GET  /api/tournament           # מבנה + לו"ז + תוצאות
-GET  /api/matches              # משחקים + סטטוס נעילה
-GET  /api/predictions/me       # הניחושים שלי
-PUT  /api/predictions/<match>  # הזנה/עריכה (נחסם אם נעול)
-GET  /api/leaderboard          # טבלת מובילים + דירוג בתים
+POST /join                  # invite_code + display_name → tournament_user + session
+POST /login                 # join_code → session
+GET  /tournament            # מבנה + לו"ז + תוצאות
+GET  /matches               # משחקים + סטטוס נעילה
+GET  /predictions/me        # הניחושים שלי
+PUT  /predictions/<match>   # הזנה/עריכה (נחסם אם נעול)
+GET  /leaderboard           # טבלת מובילים + דירוג בתים
 --- admin בלבד ---
-PUT  /api/admin/results/<match>   # עדכון תוצאה (+ קידום אוטומטי)
-GET/POST/PUT /api/admin/scoring   # ניהול ScoringConfig
-POST /api/admin/recompute         # recompute_all + ScoringRun
-PUT  /api/admin/members/<id>/role # participant ↔ child
+PUT  /admin/results/<match>    # עדכון תוצאה (+ קידום ושיבוץ אוטומטי)
+GET/POST/PUT /admin/scoring    # ניהול ScoringConfig
+POST /admin/recompute          # recompute_all + ScoringRun
+PUT  /admin/members/<id>/role  # participant ↔ child
 ```
 
 ## 11. בדיקות (TDD)
 
 - `scoring_service`: יחידה — מאמת את שלוש הדוגמאות + קצוות (תיקו, אין ניחוש, נוקאאוט עם/בלי advancing).
 - `tournament_service`: טעינת JSON, קידום נוקאאוט (`next_match_id`/`next_slot`), נעילה לפי `scheduled_utc`.
+- seeding FIFA אוטומטי: דירוג בתים + tie-breakers דטרמיניסטיים, בחירת 8 שלישיים, שיבוץ r32 לפי טבלת הקומבינציות (ללא אישור מנהל).
 - `leaderboard_service`: דירוג בתים, סיכום נקודות.
 - זרימת auth: סדר הצטרפות, אין יתומים, `join_code` ממכשיר אחר.
 - `recompute_all`: אי-רטרואקטיביות + `ScoringRun`.
