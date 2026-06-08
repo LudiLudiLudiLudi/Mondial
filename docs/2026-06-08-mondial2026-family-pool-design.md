@@ -71,13 +71,15 @@ mondial2026-family-pool/
 `join_code` (קוד אישי **לטורניר**, אקראי קצר — לכניסה ממכשיר נוסף), `joined_at`.
 
 ### Group
-`id`, `tournament_id`, `code` (A–L), `teams_json` (רשימת שמות נבחרות; לא מנורמל בכוונה — קטן).
+`id`, `tournament_id`, `code` (A–L), `teams_json`.
+**פורמט קבוע** — מערך מחרוזות שטוח (לא מערך אובייקטים): `["Germany","Brazil","Japan","Morocco"]`.
 
 ### Match
 `id` (מזהה מה-JSON, למשל `M01`), `tournament_id`, `stage`
 (`group`/`r32`/`r16`/`qf`/`sf`/`third`/`final`), `group_code` (nullable),
 `scheduled_utc` (= זמן נעילת ניחוש), `home_name`, `away_name` (slot labels בנוקאאוט עד מילוי),
-`home_score`, `away_score` (nullable), `status` (`scheduled`/`finished`),
+`home_score`, `away_score` (nullable),
+`status` (**enum סגור**: `scheduled` / `locked` / `live` / `completed`),
 `advancing_side` (nullable: `home`/`away` — מי עלתה שלב), `advance_method` (nullable: `normal`/`extra_time`/`penalties`),
 `next_match_id` (nullable), `next_slot` (nullable: `home`/`away`).
 
@@ -86,6 +88,7 @@ mondial2026-family-pool/
 `pred_advancing_side` (nullable: `home`/`away` — נוקאאוט בלבד),
 `updated_at`, `locked_at`, `score_awarded`, `scored_at`, `config_id_used` (FK → ScoringConfig).
 ייחודי לכל `(tournament_user_id, match_id)`. **אין שורה = אין ניחוש = 0 נק'.**
+`locked_at` = `null` עד זמן המשחק (נעילת kickoff בלבד). `recompute_all()` **אינו** משנה `locked_at` — הוא רק חוסם כתיבה זמנית בזמן הריצה, לא מסמן נעילה.
 הניחוש מצביע על `TournamentUser` (החברות בטורניר), לא על `User` הגלובלי.
 
 ### ScoringConfig
@@ -125,7 +128,7 @@ audit לחישוב-מחדש. `id`, `tournament_id`, `config_id`, `started_at`, `
 
 **seeding שלב בתים → r32 — אוטומטי מלא, ללא אישור מנהל:**
 חוקי FIFA 2026 ממומשים במלואם וחד-פעמית בקובץ ה-JSON + לוגיקה ב-`tournament_service`:
-1. דירוג בתים (`leaderboard_service`): נקודות → הפרש שערים → שערי זכות → תוצאות הדדיות → סדר קבוע (fallback דטרמיניסטי במקום הגרלה, לא נשארת אקראיות).
+1. דירוג בתים (`leaderboard_service`): כללי FIFA במלואם — נקודות → הפרש שערים → שערי זכות → תוצאות הדדיות → fair play. אם (נדיר מאוד) מגיעים לשובר השוויון האחרון של FIFA (הגרלה / אין מידע) → **`manual_override_by_admin`**: המנהל בוחר את הסדר. לא ממציאים כלל דטרמיניסטי משלנו — זו נקודת המגע הידנית היחידה, ורק בקצה הנדיר הזה.
 2. מקומות 1/2 בכל בית ממלאים את slots `slot:1A`/`slot:2B` אוטומטית.
 3. 8 השלישיים הטובים נבחרים בין כל הבתים; השיבוץ ל-slots `slot:3rd-…` לפי **טבלת הקומבינציות הרשמית של FIFA** (סטטית ב-JSON, לוקאפ לפי קבוצת ששת/שמונת הבתים שהעפילו שלישיהם).
 4. אין אישור מנהל ואין עריכה ידנית — המנהל **מזין תוצאות בלבד**; ההעפלה והשיבוץ קורים אוטומטית.
@@ -161,7 +164,7 @@ audit לחישוב-מחדש. `id`, `tournament_id`, `config_id`, `started_at`, `
 
 ### שינוי חוקים — לא רטרואקטיבי
 `ScoringConfig.effective_from`: קונפיג חדש חל רק על משחקים שנפתחים **אחריו**.
-`recompute_all()`: חישוב-מחדש ידני של כל הטורניר ע"י המנהל. בזמן ריצה — נעילת ניחושים + רישום `ScoringRun` (audit).
+`recompute_all()`: חישוב-מחדש ידני של כל הטורניר ע"י המנהל. בזמן ריצה — **חסימת כתיבה זמנית** (לא נעילה קבועה, לא נוגע ב-`locked_at`) + רישום `ScoringRun` (audit).
 כל ניחוש שומר `score_awarded`, `scored_at`, `config_id_used` כדי שתמיד יהיה ברור למה התקבל ניקוד מסוים.
 
 ### Presets (`data/scoring_presets.json`)
@@ -245,7 +248,23 @@ PUT  /admin/members/<id>/role  # participant ↔ child
 - זרימת auth: סדר הצטרפות, אין יתומים, `join_code` ממכשיר אחר.
 - `recompute_all`: אי-רטרואקטיביות + `ScoringRun`.
 
-## 12. מחוץ ל-MVP (לעתיד)
+## 12. הגדרת MVP (מונחי זמן)
 
+**MVP = שבוע ראשון, ארבעה דברים בלבד שעובדים מקצה לקצה:**
+1. **כניסה** — קישור → שם + invite_code → session.
+2. **ניחוש** — הזנת/עריכת תוצאה (+ עלייה בנוקאאוט) עד נעילת kickoff.
+3. **ניקוד** — מנהל מזין תוצאה → `score_prediction` רץ אוטומטית.
+4. **טבלה** — `leaderboard` מציג מובילים.
+
+אם בעוד שבוע יש רק את הארבעה האלה ועובדים — זה הצלחה. **כל דבר מעבר לזה הוא Phase 2.**
+
+### Phase 2 ואילך (לא ב-MVP)
+- presets ניקוד / מסך קונפיג מלא / `recompute_all` UI (ב-MVP: ברירת מחדל משפחתי בקוד, recompute דרך script).
+- מצב ילד כ-UI נפרד (ב-MVP: אותו מסך).
+- `champion_bonus`, `group_ranking_bonus` (ב-MVP: 0).
+- `manual_override_by_admin` לשובר שוויון נדיר.
+- `ScoringRun` audit UI.
+
+### מחוץ לתחום לחלוטין (לעתיד רחוק)
 `knockout_multiplier`, `goal_diff`, `surprise_bonus`, ריבוי טורנירים (המודל כבר תומך דרך `TournamentUser`),
-מקור נתונים מרוחק (Remote API), אימייל/סיסמאות, ייבוא JSON ידני דרך UI.
+מקור נתונים מרוחק, אימייל/סיסמאות, ייבוא JSON ידני דרך UI.
