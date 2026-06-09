@@ -107,3 +107,29 @@ button {
 
 button:hover { background: var(--accent-dark); }
 button:active { transform: translateY(1px); }
+
+button.secondary {
+  background: transparent;
+  color: var(--accent-dark);
+  border: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+button.secondary:hover { background: #f1f5f3; }
+
+.success {
+  text-align: center;
+}
+
+.success p {
+  color: var(--accent-dark);
+  font-weight: 600;
+  margin: 0.5rem 0 1rem;
+}
+
+.link {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.link:hover { text-decoration: underline; }

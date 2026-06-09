@@ -3,3 +3,7 @@ node_modules/
 *.log
 .DS_Store
 .env
+
+# Firebase tooling artifacts (not part of the app)
+.agents/
+skills-lock.json
