@@ -1,8 +1,5 @@
-.venv/
-__pycache__/
-*.pyc
-*.db
-*.sqlite3
-instance/
-.pytest_cache/
+node_modules/
+.firebase/
+*.log
+.DS_Store
 .env

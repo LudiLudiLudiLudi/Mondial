@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מונדיאל 2026 - הטורניר המשפחתי</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card" role="main">
+    <h1>מונדיאל 2026</h1>
+    <p class="subtitle">הטורניר המשפחתי</p>
+
+    <form id="login-form" novalidate>
+      <label for="name">השם שלך
+        <input id="name" name="name" type="text" autocomplete="name"
+               placeholder="למשל: סבתא רבקה" required>
+      </label>
+
+      <label for="code">קוד משפחתי
+        <input id="code" name="code" type="text" inputmode="text"
+               autocapitalize="characters" placeholder="הקוד שקיבלתם" required>
+      </label>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <button type="submit">כניסה</button>
+    </form>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

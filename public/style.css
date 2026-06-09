@@ -1,0 +1,109 @@
+/* מונדיאל 2026 — מסך כניסה. מובייל ראשון, בלי ספריות, צבעים רגועים. */
+
+:root {
+  --bg: #eef2f4;
+  --card: #ffffff;
+  --text: #2b3137;
+  --muted: #7a858d;
+  --accent: #3f8f6b;
+  --accent-dark: #347a5b;
+  --border: #d9e0e4;
+  --error: #c0492f;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.25rem;
+}
+
+.card {
+  background: var(--card);
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(43, 49, 55, 0.08);
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0.25rem 0 1.75rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+form {
+  text-align: right;
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.8rem 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text);
+  background: #fbfcfd;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(63, 143, 107, 0.15);
+}
+
+.error {
+  margin: 0 0 1rem;
+  color: var(--error);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+button {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+button:hover { background: var(--accent-dark); }
+button:active { transform: translateY(1px); }
