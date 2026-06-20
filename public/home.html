@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מונדיאל 2026 - הטורניר המשפחתי</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav" id="topnav">
+    <a data-nav="home">🏠<span class="nav-label"> בית</span></a>
+    <a data-nav="bracket">🌳<span class="nav-label"> עץ</span></a>
+    <a data-nav="predict">🎯<span class="nav-label"> ניחושים</span></a>
+    <a data-nav="results">🏆<span class="nav-label"> תוצאות</span></a>
+    <a data-nav="help">❓<span class="nav-label"> עזרה</span></a>
+    <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
+    <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
+  </nav>
+
+  <main class="card" role="main">
+    <h1>⚽ מונדיאל 2026</h1>
+    <p class="subtitle">הטורניר המשפחתי</p>
+    <p class="kicker">הטורניר מתחיל בקרוב — אפשר כבר להצטרף ולהתחיל לנחש</p>
+
+    <p class="explainer">המנהל שולח קישור.<br>נכנסים עם שם מלא ומחכים לאישור.</p>
+
+    <section class="participants" id="next-matches" hidden>
+      <h2 class="panel-title">🔥 המשחקים הבאים</h2>
+      <div id="next-matches-rows"></div>
+    </section>
+
+    <div class="home-stats">
+      <div class="home-stat">🔥 נרשמו: <strong id="hs-registered">עדיין אין נתונים</strong></div>
+      <div class="home-stat">🟢 ניחשו: <strong id="hs-predicted">עדיין אין נתונים</strong></div>
+      <div class="home-stat">⏳ עוד לא ניחשו: <strong id="hs-not-predicted">עדיין אין נתונים</strong></div>
+    </div>
+
+    <section class="participants" id="leaderboard" hidden>
+      <h2 class="panel-title">🏆 טבלת הניקוד</h2>
+      <div id="leaderboard-rows"></div>
+    </section>
+
+    <section class="participants" id="home-people" hidden>
+      <h2 class="panel-title">👥 מי בפנים</h2>
+      <div id="home-people-rows"></div>
+    </section>
+
+    <div class="home-actions">
+      <a id="go-predict" class="btn-link primary-big" href="index.html">🎯 התחל לנחש</a>
+      <a id="go-bracket" class="btn-link secondary-link" href="bracket.html">🌳 עץ הטורניר</a>
+      <a id="go-instructions" class="btn-link secondary-link" href="instructions.html">❓ איך זה עובד</a>
+    </div>
+
+    <p class="footer-note">גרסת ניסיון למשפחה ⚽</p>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

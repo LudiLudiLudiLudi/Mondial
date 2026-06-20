@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מונדיאל 2026 - תוצאות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav" id="topnav">
+    <a data-nav="home">🏠<span class="nav-label"> בית</span></a>
+    <a data-nav="bracket">🌳<span class="nav-label"> עץ</span></a>
+    <a data-nav="predict">🎯<span class="nav-label"> ניחושים</span></a>
+    <a data-nav="results">🏆<span class="nav-label"> תוצאות</span></a>
+    <a data-nav="help">❓<span class="nav-label"> עזרה</span></a>
+    <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
+    <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
+  </nav>
+  <main class="card wide" role="main">
+    <h1>🏆 תוצאות</h1>
+    <p class="subtitle">תצוגה בלבד — משחקים חיים, תוצאות וטבלת ניקוד</p>
+
+    <div class="top-grid">
+      <section class="section" id="results-leaderboard-sec">
+        <h2 class="panel-title">🏆 טבלת ניקוד</h2>
+        <div id="results-leaderboard"><p class="muted">עדיין אין ניקוד</p></div>
+        <div id="scoring-help"></div>
+      </section>
+
+      <section class="section" id="results-live-sec">
+        <h2 class="panel-title">🔥 משחקים חיים / קרובים</h2>
+        <div class="bets-table-wrap">
+          <div id="results-live"><p class="loading">טוען…</p></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="section">
+      <h2 class="panel-title">🏁 משחקים שהסתיימו</h2>
+      <div class="bets-table-wrap">
+        <div id="results-final"><p class="muted">עדיין אין תוצאות סופיות</p></div>
+      </div>
+    </section>
+
+    <section class="section results-bracket-sec">
+      <h2 class="panel-title">🌳 עץ הטורניר</h2>
+      <a id="results-bracket-link" class="btn-link secondary-link" href="bracket.html">🌳 פתח את עץ הטורניר</a>
+    </section>
+
+    <p class="footer-note">גרסת ניסיון למשפחה ⚽</p>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

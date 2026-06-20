@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>מונדיאל 2026 - הניחושים</title>
+  <title>מונדיאל 2026 - הגדרת מנהלים</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,22 +16,22 @@
     <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
     <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
   </nav>
-  <main class="card wide" role="main">
-    <div id="status-bar" class="status-bar"></div>
-    <h1 id="greeting">שלום</h1>
 
-    <section id="participants" class="participants" aria-live="polite"></section>
+  <main class="card" id="setup-admins" role="main">
+    <h1>⚙️ הגדרת מנהלי הטורניר</h1>
+    <p class="subtitle">בחר מי ינהל את הטורניר.</p>
 
-    <p class="subtitle">הזינו ניחוש לכל משחק</p>
-    <p class="autosave-note">בכל משחק: בוחרים ולוחצים 💾 לשמירה</p>
+    <p id="setup-msg" class="explainer" hidden></p>
 
-    <div id="matches" class="matches" aria-live="polite">
-      <p class="loading">טוען משחקים…</p>
-    </div>
+    <form id="setup-form">
+      <label class="admin-choice"><input type="checkbox" value="אלעד" checked> אלעד</label>
+      <label class="admin-choice"><input type="checkbox" value="דוד דין" checked> דוד דין</label>
 
-    <button id="logout" type="button" class="secondary">התנתקות</button>
+      <button type="submit">שמור והמשך</button>
+    </form>
+
+    <p class="footer-note">גרסת ניסיון למשפחה ⚽</p>
   </main>
-
   <script type="module" src="app.js"></script>
 </body>
 </html>

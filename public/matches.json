@@ -1,0 +1,942 @@
+{
+ "tournament": "מונדיאל 2026",
+ "source": "fixturedownload.com (2026-06-10)",
+ "matches": [
+  {
+   "id": "M001",
+   "stage": "group",
+   "group": "A",
+   "home": "מקסיקו",
+   "away": "דרום אפריקה",
+   "kickoffAt": "2026-06-11T19:00:00Z",
+   "venue": "Mexico City Stadium"
+  },
+  {
+   "id": "M002",
+   "stage": "group",
+   "group": "A",
+   "home": "דרום קוריאה",
+   "away": "צ'כיה",
+   "kickoffAt": "2026-06-12T02:00:00Z",
+   "venue": "Guadalajara Stadium"
+  },
+  {
+   "id": "M003",
+   "stage": "group",
+   "group": "B",
+   "home": "קנדה",
+   "away": "בוסניה",
+   "kickoffAt": "2026-06-12T19:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M004",
+   "stage": "group",
+   "group": "D",
+   "home": "ארה\"ב",
+   "away": "פרגוואי",
+   "kickoffAt": "2026-06-13T01:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M005",
+   "stage": "group",
+   "group": "C",
+   "home": "האיטי",
+   "away": "סקוטלנד",
+   "kickoffAt": "2026-06-14T01:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M006",
+   "stage": "group",
+   "group": "D",
+   "home": "אוסטרליה",
+   "away": "טורקיה",
+   "kickoffAt": "2026-06-14T04:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M007",
+   "stage": "group",
+   "group": "C",
+   "home": "ברזיל",
+   "away": "מרוקו",
+   "kickoffAt": "2026-06-13T22:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M008",
+   "stage": "group",
+   "group": "B",
+   "home": "קטאר",
+   "away": "שווייץ",
+   "kickoffAt": "2026-06-13T19:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M009",
+   "stage": "group",
+   "group": "E",
+   "home": "חוף השנהב",
+   "away": "אקוודור",
+   "kickoffAt": "2026-06-14T23:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M010",
+   "stage": "group",
+   "group": "E",
+   "home": "גרמניה",
+   "away": "קוראסאו",
+   "kickoffAt": "2026-06-14T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M011",
+   "stage": "group",
+   "group": "F",
+   "home": "הולנד",
+   "away": "יפן",
+   "kickoffAt": "2026-06-14T20:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M012",
+   "stage": "group",
+   "group": "F",
+   "home": "שוודיה",
+   "away": "תוניסיה",
+   "kickoffAt": "2026-06-15T02:00:00Z",
+   "venue": "Monterrey Stadium"
+  },
+  {
+   "id": "M013",
+   "stage": "group",
+   "group": "H",
+   "home": "ערב הסעודית",
+   "away": "אורוגוואי",
+   "kickoffAt": "2026-06-15T22:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M014",
+   "stage": "group",
+   "group": "H",
+   "home": "ספרד",
+   "away": "כף ורדה",
+   "kickoffAt": "2026-06-15T16:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M015",
+   "stage": "group",
+   "group": "G",
+   "home": "איראן",
+   "away": "ניו זילנד",
+   "kickoffAt": "2026-06-16T01:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M016",
+   "stage": "group",
+   "group": "G",
+   "home": "בלגיה",
+   "away": "מצרים",
+   "kickoffAt": "2026-06-15T19:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M017",
+   "stage": "group",
+   "group": "I",
+   "home": "צרפת",
+   "away": "סנגל",
+   "kickoffAt": "2026-06-16T19:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M018",
+   "stage": "group",
+   "group": "I",
+   "home": "עיראק",
+   "away": "נורווגיה",
+   "kickoffAt": "2026-06-16T22:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M019",
+   "stage": "group",
+   "group": "J",
+   "home": "ארגנטינה",
+   "away": "אלג'יריה",
+   "kickoffAt": "2026-06-17T01:00:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M020",
+   "stage": "group",
+   "group": "J",
+   "home": "אוסטריה",
+   "away": "ירדן",
+   "kickoffAt": "2026-06-17T04:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M021",
+   "stage": "group",
+   "group": "L",
+   "home": "גאנה",
+   "away": "פנמה",
+   "kickoffAt": "2026-06-17T23:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M022",
+   "stage": "group",
+   "group": "L",
+   "home": "אנגליה",
+   "away": "קרואטיה",
+   "kickoffAt": "2026-06-17T20:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M023",
+   "stage": "group",
+   "group": "K",
+   "home": "פורטוגל",
+   "away": "קונגו",
+   "kickoffAt": "2026-06-17T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M024",
+   "stage": "group",
+   "group": "K",
+   "home": "אוזבקיסטן",
+   "away": "קולומביה",
+   "kickoffAt": "2026-06-18T02:00:00Z",
+   "venue": "Mexico City Stadium"
+  },
+  {
+   "id": "M025",
+   "stage": "group",
+   "group": "A",
+   "home": "צ'כיה",
+   "away": "דרום אפריקה",
+   "kickoffAt": "2026-06-18T16:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M026",
+   "stage": "group",
+   "group": "B",
+   "home": "שווייץ",
+   "away": "בוסניה",
+   "kickoffAt": "2026-06-18T19:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M027",
+   "stage": "group",
+   "group": "B",
+   "home": "קנדה",
+   "away": "קטאר",
+   "kickoffAt": "2026-06-18T22:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M028",
+   "stage": "group",
+   "group": "A",
+   "home": "מקסיקו",
+   "away": "דרום קוריאה",
+   "kickoffAt": "2026-06-19T01:00:00Z",
+   "venue": "Guadalajara Stadium"
+  },
+  {
+   "id": "M029",
+   "stage": "group",
+   "group": "C",
+   "home": "ברזיל",
+   "away": "האיטי",
+   "kickoffAt": "2026-06-20T01:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M030",
+   "stage": "group",
+   "group": "C",
+   "home": "סקוטלנד",
+   "away": "מרוקו",
+   "kickoffAt": "2026-06-19T22:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M031",
+   "stage": "group",
+   "group": "D",
+   "home": "טורקיה",
+   "away": "פרגוואי",
+   "kickoffAt": "2026-06-20T04:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M032",
+   "stage": "group",
+   "group": "D",
+   "home": "ארה\"ב",
+   "away": "אוסטרליה",
+   "kickoffAt": "2026-06-19T19:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M033",
+   "stage": "group",
+   "group": "E",
+   "home": "גרמניה",
+   "away": "חוף השנהב",
+   "kickoffAt": "2026-06-20T20:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M034",
+   "stage": "group",
+   "group": "E",
+   "home": "אקוודור",
+   "away": "קוראסאו",
+   "kickoffAt": "2026-06-21T00:00:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M035",
+   "stage": "group",
+   "group": "F",
+   "home": "הולנד",
+   "away": "שוודיה",
+   "kickoffAt": "2026-06-20T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M036",
+   "stage": "group",
+   "group": "F",
+   "home": "תוניסיה",
+   "away": "יפן",
+   "kickoffAt": "2026-06-21T04:00:00Z",
+   "venue": "Monterrey Stadium"
+  },
+  {
+   "id": "M037",
+   "stage": "group",
+   "group": "H",
+   "home": "אורוגוואי",
+   "away": "כף ורדה",
+   "kickoffAt": "2026-06-21T22:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M038",
+   "stage": "group",
+   "group": "H",
+   "home": "ספרד",
+   "away": "ערב הסעודית",
+   "kickoffAt": "2026-06-21T16:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M039",
+   "stage": "group",
+   "group": "G",
+   "home": "בלגיה",
+   "away": "איראן",
+   "kickoffAt": "2026-06-21T19:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M040",
+   "stage": "group",
+   "group": "G",
+   "home": "ניו זילנד",
+   "away": "מצרים",
+   "kickoffAt": "2026-06-22T01:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M041",
+   "stage": "group",
+   "group": "I",
+   "home": "נורווגיה",
+   "away": "סנגל",
+   "kickoffAt": "2026-06-23T00:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M042",
+   "stage": "group",
+   "group": "I",
+   "home": "צרפת",
+   "away": "עיראק",
+   "kickoffAt": "2026-06-22T21:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M043",
+   "stage": "group",
+   "group": "J",
+   "home": "ארגנטינה",
+   "away": "אוסטריה",
+   "kickoffAt": "2026-06-22T17:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M044",
+   "stage": "group",
+   "group": "J",
+   "home": "ירדן",
+   "away": "אלג'יריה",
+   "kickoffAt": "2026-06-23T03:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M045",
+   "stage": "group",
+   "group": "L",
+   "home": "אנגליה",
+   "away": "גאנה",
+   "kickoffAt": "2026-06-23T20:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M046",
+   "stage": "group",
+   "group": "L",
+   "home": "פנמה",
+   "away": "קרואטיה",
+   "kickoffAt": "2026-06-23T23:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M047",
+   "stage": "group",
+   "group": "K",
+   "home": "פורטוגל",
+   "away": "אוזבקיסטן",
+   "kickoffAt": "2026-06-23T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M048",
+   "stage": "group",
+   "group": "K",
+   "home": "קולומביה",
+   "away": "קונגו",
+   "kickoffAt": "2026-06-24T02:00:00Z",
+   "venue": "Guadalajara Stadium"
+  },
+  {
+   "id": "M049",
+   "stage": "group",
+   "group": "C",
+   "home": "סקוטלנד",
+   "away": "ברזיל",
+   "kickoffAt": "2026-06-24T22:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M050",
+   "stage": "group",
+   "group": "C",
+   "home": "מרוקו",
+   "away": "האיטי",
+   "kickoffAt": "2026-06-24T22:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M051",
+   "stage": "group",
+   "group": "B",
+   "home": "שווייץ",
+   "away": "קנדה",
+   "kickoffAt": "2026-06-24T19:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M052",
+   "stage": "group",
+   "group": "B",
+   "home": "בוסניה",
+   "away": "קטאר",
+   "kickoffAt": "2026-06-24T19:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M053",
+   "stage": "group",
+   "group": "A",
+   "home": "צ'כיה",
+   "away": "מקסיקו",
+   "kickoffAt": "2026-06-25T01:00:00Z",
+   "venue": "Mexico City Stadium"
+  },
+  {
+   "id": "M054",
+   "stage": "group",
+   "group": "A",
+   "home": "דרום אפריקה",
+   "away": "דרום קוריאה",
+   "kickoffAt": "2026-06-25T01:00:00Z",
+   "venue": "Monterrey Stadium"
+  },
+  {
+   "id": "M055",
+   "stage": "group",
+   "group": "E",
+   "home": "קוראסאו",
+   "away": "חוף השנהב",
+   "kickoffAt": "2026-06-25T20:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M056",
+   "stage": "group",
+   "group": "E",
+   "home": "אקוודור",
+   "away": "גרמניה",
+   "kickoffAt": "2026-06-25T20:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M057",
+   "stage": "group",
+   "group": "F",
+   "home": "יפן",
+   "away": "שוודיה",
+   "kickoffAt": "2026-06-25T23:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M058",
+   "stage": "group",
+   "group": "F",
+   "home": "תוניסיה",
+   "away": "הולנד",
+   "kickoffAt": "2026-06-25T23:00:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M059",
+   "stage": "group",
+   "group": "D",
+   "home": "טורקיה",
+   "away": "ארה\"ב",
+   "kickoffAt": "2026-06-26T02:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M060",
+   "stage": "group",
+   "group": "D",
+   "home": "פרגוואי",
+   "away": "אוסטרליה",
+   "kickoffAt": "2026-06-26T02:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M061",
+   "stage": "group",
+   "group": "I",
+   "home": "נורווגיה",
+   "away": "צרפת",
+   "kickoffAt": "2026-06-26T19:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M062",
+   "stage": "group",
+   "group": "I",
+   "home": "סנגל",
+   "away": "עיראק",
+   "kickoffAt": "2026-06-26T19:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M063",
+   "stage": "group",
+   "group": "G",
+   "home": "מצרים",
+   "away": "איראן",
+   "kickoffAt": "2026-06-27T03:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M064",
+   "stage": "group",
+   "group": "G",
+   "home": "ניו זילנד",
+   "away": "בלגיה",
+   "kickoffAt": "2026-06-27T03:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M065",
+   "stage": "group",
+   "group": "H",
+   "home": "כף ורדה",
+   "away": "ערב הסעודית",
+   "kickoffAt": "2026-06-27T00:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M066",
+   "stage": "group",
+   "group": "H",
+   "home": "אורוגוואי",
+   "away": "ספרד",
+   "kickoffAt": "2026-06-27T00:00:00Z",
+   "venue": "Guadalajara Stadium"
+  },
+  {
+   "id": "M067",
+   "stage": "group",
+   "group": "L",
+   "home": "פנמה",
+   "away": "אנגליה",
+   "kickoffAt": "2026-06-27T21:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M068",
+   "stage": "group",
+   "group": "L",
+   "home": "קרואטיה",
+   "away": "גאנה",
+   "kickoffAt": "2026-06-27T21:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M069",
+   "stage": "group",
+   "group": "J",
+   "home": "אלג'יריה",
+   "away": "אוסטריה",
+   "kickoffAt": "2026-06-28T02:00:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M070",
+   "stage": "group",
+   "group": "J",
+   "home": "ירדן",
+   "away": "ארגנטינה",
+   "kickoffAt": "2026-06-28T02:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M071",
+   "stage": "group",
+   "group": "K",
+   "home": "קולומביה",
+   "away": "פורטוגל",
+   "kickoffAt": "2026-06-27T23:30:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M072",
+   "stage": "group",
+   "group": "K",
+   "home": "קונגו",
+   "away": "אוזבקיסטן",
+   "kickoffAt": "2026-06-27T23:30:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M073",
+   "stage": "r32",
+   "group": null,
+   "home": "סגנית בית A",
+   "away": "סגנית בית B",
+   "kickoffAt": "2026-06-28T19:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M074",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית E",
+   "away": "מקום 3 (A/B/C/D/F)",
+   "kickoffAt": "2026-06-29T20:30:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M075",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית F",
+   "away": "סגנית בית C",
+   "kickoffAt": "2026-06-30T01:00:00Z",
+   "venue": "Monterrey Stadium"
+  },
+  {
+   "id": "M076",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית C",
+   "away": "סגנית בית F",
+   "kickoffAt": "2026-06-29T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M077",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית I",
+   "away": "מקום 3 (C/D/F/G/H)",
+   "kickoffAt": "2026-06-30T21:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M078",
+   "stage": "r32",
+   "group": null,
+   "home": "סגנית בית E",
+   "away": "סגנית בית I",
+   "kickoffAt": "2026-06-30T17:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M079",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית A",
+   "away": "מקום 3 (C/E/F/H/I)",
+   "kickoffAt": "2026-07-01T01:00:00Z",
+   "venue": "Mexico City Stadium"
+  },
+  {
+   "id": "M080",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית L",
+   "away": "מקום 3 (E/H/I/J/K)",
+   "kickoffAt": "2026-07-01T16:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M081",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית D",
+   "away": "מקום 3 (B/E/F/I/J)",
+   "kickoffAt": "2026-07-02T00:00:00Z",
+   "venue": "San Francisco Bay Area Stadium"
+  },
+  {
+   "id": "M082",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית G",
+   "away": "מקום 3 (A/E/H/I/J)",
+   "kickoffAt": "2026-07-01T20:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M083",
+   "stage": "r32",
+   "group": null,
+   "home": "סגנית בית K",
+   "away": "סגנית בית L",
+   "kickoffAt": "2026-07-02T23:00:00Z",
+   "venue": "Toronto Stadium"
+  },
+  {
+   "id": "M084",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית H",
+   "away": "סגנית בית J",
+   "kickoffAt": "2026-07-02T19:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M085",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית B",
+   "away": "מקום 3 (E/F/G/I/J)",
+   "kickoffAt": "2026-07-03T03:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M086",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית J",
+   "away": "סגנית בית H",
+   "kickoffAt": "2026-07-03T22:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M087",
+   "stage": "r32",
+   "group": null,
+   "home": "מנצחת בית K",
+   "away": "מקום 3 (D/E/I/J/L)",
+   "kickoffAt": "2026-07-04T01:30:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M088",
+   "stage": "r32",
+   "group": null,
+   "home": "סגנית בית D",
+   "away": "סגנית בית G",
+   "kickoffAt": "2026-07-03T18:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M089",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-04T21:00:00Z",
+   "venue": "Philadelphia Stadium"
+  },
+  {
+   "id": "M090",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-04T17:00:00Z",
+   "venue": "Houston Stadium"
+  },
+  {
+   "id": "M091",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-05T20:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  },
+  {
+   "id": "M092",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-06T00:00:00Z",
+   "venue": "Mexico City Stadium"
+  },
+  {
+   "id": "M093",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-06T19:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M094",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-07T00:00:00Z",
+   "venue": "Seattle Stadium"
+  },
+  {
+   "id": "M095",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-07T16:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M096",
+   "stage": "r16",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-07T20:00:00Z",
+   "venue": "BC Place Vancouver"
+  },
+  {
+   "id": "M097",
+   "stage": "qf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-09T20:00:00Z",
+   "venue": "Boston Stadium"
+  },
+  {
+   "id": "M098",
+   "stage": "qf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-10T19:00:00Z",
+   "venue": "Los Angeles Stadium"
+  },
+  {
+   "id": "M099",
+   "stage": "qf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-11T21:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M100",
+   "stage": "qf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-12T01:00:00Z",
+   "venue": "Kansas City Stadium"
+  },
+  {
+   "id": "M101",
+   "stage": "sf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-14T19:00:00Z",
+   "venue": "Dallas Stadium"
+  },
+  {
+   "id": "M102",
+   "stage": "sf",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-15T19:00:00Z",
+   "venue": "Atlanta Stadium"
+  },
+  {
+   "id": "M103",
+   "stage": "third",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-18T21:00:00Z",
+   "venue": "Miami Stadium"
+  },
+  {
+   "id": "M104",
+   "stage": "final",
+   "group": null,
+   "home": "טרם נקבע",
+   "away": "טרם נקבע",
+   "kickoffAt": "2026-07-19T19:00:00Z",
+   "venue": "New York/New Jersey Stadium"
+  }
+ ]
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>מונדיאל 2026 - הניחושים</title>
+  <title>מונדיאל 2026 - ממתין לאישור</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,22 +16,14 @@
     <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
     <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
   </nav>
-  <main class="card wide" role="main">
+  <main class="card" role="main">
     <div id="status-bar" class="status-bar"></div>
-    <h1 id="greeting">שלום</h1>
-
-    <section id="participants" class="participants" aria-live="polite"></section>
-
-    <p class="subtitle">הזינו ניחוש לכל משחק</p>
-    <p class="autosave-note">בכל משחק: בוחרים ולוחצים 💾 לשמירה</p>
-
-    <div id="matches" class="matches" aria-live="polite">
-      <p class="loading">טוען משחקים…</p>
+    <h1>כמעט שם…</h1>
+    <div id="pending">
+      <p class="subtitle">סטטוס ההצטרפות שלך:</p>
+      <p id="pending-msg" class="pending-msg">בודק…</p>
     </div>
-
-    <button id="logout" type="button" class="secondary">התנתקות</button>
   </main>
-
   <script type="module" src="app.js"></script>
 </body>
 </html>

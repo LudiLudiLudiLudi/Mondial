@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>מונדיאל 2026 - הניחושים</title>
+  <title>מונדיאל 2026 - עץ הטורניר</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,22 +16,29 @@
     <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
     <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
   </nav>
-  <main class="card wide" role="main">
-    <div id="status-bar" class="status-bar"></div>
-    <h1 id="greeting">שלום</h1>
+  <main class="card wide bracket-card" role="main">
+    <h1>🌳 עץ הטורניר</h1>
+    <p class="kicker">מתעדכן לאורך הטורניר</p>
 
-    <section id="participants" class="participants" aria-live="polite"></section>
-
-    <p class="subtitle">הזינו ניחוש לכל משחק</p>
-    <p class="autosave-note">בכל משחק: בוחרים ולוחצים 💾 לשמירה</p>
-
-    <div id="matches" class="matches" aria-live="polite">
-      <p class="loading">טוען משחקים…</p>
+    <div class="community-bar">
+      <span>👥 <strong id="cb-participants">עדיין אין נתונים</strong></span>
+      <span>✍️ <strong id="cb-predicted">עדיין אין נתונים</strong></span>
     </div>
 
-    <button id="logout" type="button" class="secondary">התנתקות</button>
-  </main>
+    <p class="legend">
+      <span>🟢 הוגרל</span>
+      <span>🟡 פתוח</span>
+      <span>⚪ עתידי</span>
+    </p>
 
+    <div class="bracket-scroll">
+      <div class="bracket-grid" id="bracket-grid">
+        <p class="loading">טוען את עץ הטורניר…</p>
+      </div>
+    </div>
+
+    <p class="footer-note">גרסת ניסיון למשפחה ⚽</p>
+  </main>
   <script type="module" src="app.js"></script>
 </body>
 </html>

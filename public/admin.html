@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מונדיאל 2026 - ניהול</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="topnav" id="topnav">
+    <a data-nav="home">🏠<span class="nav-label"> בית</span></a>
+    <a data-nav="bracket">🌳<span class="nav-label"> עץ</span></a>
+    <a data-nav="predict">🎯<span class="nav-label"> ניחושים</span></a>
+    <a data-nav="results">🏆<span class="nav-label"> תוצאות</span></a>
+    <a data-nav="help">❓<span class="nav-label"> עזרה</span></a>
+    <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
+    <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
+  </nav>
+  <main class="card wide" id="admin" role="main">
+    <div id="status-bar" class="status-bar"></div>
+    <h1>מסך ניהול</h1>
+    <p id="admin-status" class="error" role="alert" hidden></p>
+
+    <section class="admin-block">
+      <h2 class="panel-title">בקשות הצטרפות</h2>
+      <div id="pending-list"><p class="muted">טוען…</p></div>
+    </section>
+
+    <section class="admin-block">
+      <h2 class="panel-title">משתתפים מאושרים</h2>
+      <div id="part-list"><p class="muted">טוען…</p></div>
+    </section>
+
+    <section class="admin-block" id="bets-block" hidden>
+      <h2 class="panel-title">🎯 הימורים חיים</h2>
+      <div class="bets-summary" id="bets-summary"></div>
+      <div class="bets-filters">
+        <select id="bets-scope">
+          <option value="upcoming">משחקים קרובים (72 שע')</option>
+          <option value="all">כל המשחקים</option>
+          <option value="missing">רק חסרים</option>
+        </select>
+        <select id="bets-participant">
+          <option value="">כל המשתתפים</option>
+        </select>
+      </div>
+      <div class="bets-table-wrap">
+        <table class="bets-table">
+          <thead>
+            <tr><th>משחק</th><th>שעה</th><th>משתתף</th><th>סטטוס</th><th>בחירה</th><th>תוצאה משוערת</th><th>עודכן</th></tr>
+          </thead>
+          <tbody id="bets-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-block" id="edit-bets-block" hidden>
+      <h2 class="panel-title">🧑‍🧒 עזרה לילדים</h2>
+      <p class="muted">עזרת מבוגר היא חלק מהמשחק: השלמה, עדכון וליווי. כל עזרה מתועדת וגלויה לילד.</p>
+      <!-- תצוגת הרשימה — מתכווצת אוטומטית כשנפתח עורך -->
+      <div id="edit-list-view">
+        <div class="bets-filters">
+          <input id="edit-search" type="search" placeholder="חיפוש: שם ילד / משחק / נבחרת">
+          <select id="edit-stage">
+            <option value="">כל השלבים</option>
+            <option value="group">שלב הבתים</option>
+            <option value="ko">נוקאאוט</option>
+          </select>
+          <select id="edit-state">
+            <option value="has">יש ניחוש</option>
+            <option value="missing">אין ניחוש</option>
+            <option value="">הכול</option>
+          </select>
+        </div>
+        <div class="bets-table-wrap">
+          <table class="bets-table">
+            <thead>
+              <tr><th>משתתף</th><th>משחק</th><th>זמן משחק</th><th>מצב</th><th>ניחוש קיים</th><th>עודכן לאחרונה</th><th></th></tr>
+            </thead>
+            <tbody id="edit-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- עורך ייעודי ברוחב מלא — מוזרק לכאן, מחליף את הרשימה בזמן עריכה -->
+      <div id="edit-panel" class="edit-panel" hidden></div>
+    </section>
+
+    <section class="admin-block" id="audit-block" hidden>
+      <h2 class="panel-title">📝 היסטוריית תיקונים</h2>
+      <div class="bets-table-wrap">
+        <table class="bets-table">
+          <thead>
+            <tr><th>משחק</th><th>ילד</th><th>עודכן ע"י</th><th>זמן</th></tr>
+          </thead>
+          <tbody id="audit-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-block" id="results-block" hidden>
+      <h2 class="panel-title">🏟️ תוצאות אמת</h2>
+      <select id="res-match"></select>
+      <label class="res-open-toggle"><input type="checkbox" id="res-open-only" checked> הצג רק פתוחים</label>
+      <div class="match-row" style="margin-top:0.5rem">
+        <span class="team home" id="res-home-name"></span>
+        <input class="score" id="res-home" type="number" min="0" inputmode="numeric">
+        <span class="sep">:</span>
+        <input class="score" id="res-away" type="number" min="0" inputmode="numeric">
+        <span class="team away" id="res-away-name"></span>
+      </div>
+      <div class="pick-row" id="res-adv-row" hidden>
+        <span class="pick-q">מי עלתה? (חובה בתיקו בנוקאאוט)</span>
+        <label class="pick-opt"><input type="radio" name="res-adv" value="home"><span id="res-adv-home-label"> נבחרת הבית</span></label>
+        <label class="pick-opt"><input type="radio" name="res-adv" value="away"><span id="res-adv-away-label"> הנבחרת האורחת</span></label>
+      </div>
+      <button id="res-save" type="button">שמור תוצאה וחשב ניקוד</button>
+      <p id="res-status" class="muted"></p>
+    </section>
+
+    <section class="admin-block" id="export-block" hidden>
+      <h2 class="panel-title">💾 גיבוי וייצוא</h2>
+      <button id="export-csv" type="button" class="mini">⬇️ CSV</button>
+      <button id="export-json" type="button" class="mini secondary">⬇️ JSON מלא</button>
+      <button id="import-csv" type="button" class="mini secondary" disabled title="בקרוב — לא ממומש">⬆️ ייבוא מגיבוי CSV</button>
+      <p id="export-status" class="muted"></p>
+    </section>
+
+
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

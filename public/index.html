@@ -3,36 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>מונדיאל 2026 - הטורניר המשפחתי</title>
+  <title>מונדיאל 2026 - כניסה לטורניר</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="topnav" id="topnav">
+    <a data-nav="home">🏠<span class="nav-label"> בית</span></a>
+    <a data-nav="bracket">🌳<span class="nav-label"> עץ</span></a>
+    <a data-nav="predict">🎯<span class="nav-label"> ניחושים</span></a>
+    <a data-nav="results">🏆<span class="nav-label"> תוצאות</span></a>
+    <a data-nav="help">❓<span class="nav-label"> עזרה</span></a>
+    <a data-nav="back" href="#">↩<span class="nav-label"> חזור</span></a>
+    <a data-nav="admin" id="nav-admin" hidden>⚙️<span class="nav-label"> ניהול</span></a>
+  </nav>
+
   <main class="card" role="main">
-    <h1>מונדיאל 2026</h1>
-    <p class="subtitle">הטורניר המשפחתי</p>
+    <h1>⚽ כניסה לטורניר</h1>
+    <p class="subtitle">הצטרפו לטורניר המשפחתי.</p>
+
+    <p id="no-link" class="explainer" hidden>המנהל ישלח לכם קישור להצטרפות.</p>
 
     <form id="login-form" novalidate>
-      <label for="name">השם שלך
-        <input id="name" name="name" type="text" autocomplete="name"
-               placeholder="למשל: סבתא רבקה" required>
-      </label>
+      <p id="tournament-banner" class="tournament-banner" hidden>
+        הצטרפת לטורניר:<br><strong>🏆 <span id="tournament-code"></span></strong>
+      </p>
 
-      <label for="code">קוד משפחתי
-        <input id="code" name="code" type="text" inputmode="text"
-               autocapitalize="characters" placeholder="הקוד שקיבלתם" required>
-      </label>
+      <!-- שלב 1: שם מלא בלבד -->
+      <div id="step-name">
+        <label for="name">שם מלא
+          <input id="name" name="name" type="text" autocomplete="name"
+                 placeholder="סבתא עליזה" required>
+        </label>
+        <button type="submit" id="continue-btn">המשך</button>
+      </div>
+
+      <!-- שלב 2: סיסמה (משתתף חוזר / מנהל) -->
+      <div id="step-password" hidden>
+        <p id="hello-name" class="tournament-banner"></p>
+        <label for="password">סיסמה
+          <input id="password" name="password" type="password"
+                 autocomplete="current-password" placeholder="הסיסמה שלך">
+        </label>
+        <button type="submit" id="login-btn">כניסה</button>
+        <p class="hint">שכחת סיסמה? פנה למנהל</p>
+      </div>
 
       <p id="error" class="error" role="alert" hidden></p>
-
-      <button type="submit">כניסה</button>
     </form>
 
-    <div id="success" class="success" role="status" hidden>
-      <p>נרשמת בהצלחה — מסך הניחושים יתחבר בשלב הבא.</p>
-      <a class="link" href="predictions.html">המשך למסך הניחושים →</a>
-    </div>
+    <p class="footer-note">גרסת ניסיון למשפחה ⚽</p>
   </main>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

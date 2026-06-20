@@ -1,0 +1,166 @@
+rules_version = '2';
+
+// Option A — Firestore בלבד, בלי Firebase Auth (מעבר ל-Anonymous).
+// עקרונות:
+//   * הלקוח לעולם לא קורא passwordHash (private/cred: read=false).
+//   * אימות סיסמה = verify-by-write: עדכון cred מותר רק אם ה-hash שנשלח
+//     זהה ל-hash השמור. כתיבה שנדחתה = סיסמה שגויה = אפס שינוי state.
+//   * זהות חוצת-מכשירים: directory (שם→מזהה) + device_links (uid→participant).
+//   * מזהי מסמכים:
+//       directory/<code>__<nameKey>          { participantId }
+//       participants/<code>__<nameKey>       פרופיל (בלי credentials)
+//       participants/<id>/private/cred       { passwordHash, mustReset, lastLoginAt, uids[] }
+//       device_links/<uid>                   { participantId, tournamentCode }
+//       join_requests/<code>__<uid>          בקשות הצטרפות
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+
+    // המשתתף המקושר למכשיר הנוכחי (דרך device_links)
+    function myLink() {
+      return get(/databases/$(database)/documents/device_links/$(uid())).data;
+    }
+    function linked() {
+      return exists(/databases/$(database)/documents/device_links/$(uid()));
+    }
+    function myPart() {
+      return get(/databases/$(database)/documents/participants/$(myLink().participantId)).data;
+    }
+    function isApproved(tc) {
+      return signedIn() && linked()
+        && myLink().tournamentCode == tc
+        && myPart().status == 'approved';
+    }
+    function isAdmin(tc) {
+      return isApproved(tc) && myPart().isAdmin == true;
+    }
+    function credOf(partId) {
+      return get(/databases/$(database)/documents/participants/$(partId)/private/cred).data;
+    }
+
+    // ---------- tournaments ----------
+    match /tournaments/{code} {
+      allow read: if signedIn();          // מטא-מידע בסיסי בלבד (שם טורניר)
+      allow create, update, delete: if false;  // נוצר ידנית ע"י בעל המערכת (seed)
+    }
+
+    // ---------- directory: שם → מזהה בלבד ----------
+    match /directory/{dirId} {
+      allow read: if signedIn();          // נדרש לפני זיהוי; מכיל participantId בלבד
+      allow create, update, delete: if isAdmin(request.resource.data.tournamentCode);
+    }
+
+    // ---------- join_requests ----------
+    match /join_requests/{reqId} {
+      allow create: if signedIn()
+        && request.resource.data.uid == uid()
+        && reqId == request.resource.data.tournamentCode + '__' + uid()
+        && request.resource.data.status == 'pending';
+      allow read: if signedIn()
+        && (resource.data.uid == uid() || isAdmin(resource.data.tournamentCode));
+      allow update, delete: if isAdmin(resource.data.tournamentCode);
+    }
+
+    // ---------- participants: פרופיל בלבד, בלי credentials ----------
+    match /participants/{partId} {
+      allow read: if isApproved(resource.data.tournamentCode);
+      allow create, update, delete: if isAdmin(request.resource.data.tournamentCode);
+
+      // ----- private/cred: לעולם לא קריא מהלקוח -----
+      match /private/cred {
+        allow read: if false;
+
+        // set-password: רק כשאין סיסמה (ראשונה) או אחרי איפוס מנהל.
+        // via=="set" — כוונה מפורשת; מונע מכניסה רגילה "לקבוע" סיסמה כשה-hash ריק.
+        allow update: if signedIn()
+          && request.resource.data.via == "set"
+          && (resource.data.passwordHash == null || resource.data.mustReset == true)
+          && request.resource.data.passwordHash is string
+          && request.resource.data.mustReset == false
+          && request.resource.data.uids.hasAll([uid()]);
+
+        // verify-by-write (כניסה): via=="login" + ה-hash שנשלח זהה לשמור.
+        // hash ריק/mustReset → אין ענף מתאים → דחייה → הלקוח מנתב לבחירת סיסמה.
+        allow update: if signedIn()
+          && request.resource.data.via == "login"
+          && resource.data.passwordHash is string
+          && request.resource.data.passwordHash == resource.data.passwordHash
+          && resource.data.mustReset == false
+          && request.resource.data.mustReset == false
+          && request.resource.data.uids.hasAll(resource.data.uids)
+          && request.resource.data.uids.hasAll([uid()]);
+
+        // איפוס ע"י מנהל: hash=null + mustReset=true
+        allow update: if isAdmin(get(/databases/$(database)/documents/participants/$(partId)).data.tournamentCode)
+          && request.resource.data.passwordHash == null
+          && request.resource.data.mustReset == true;
+
+        // יצירה: מנהל (באישור משתתף) — מתחיל ריק
+        allow create: if isAdmin(get(/databases/$(database)/documents/participants/$(partId)).data.tournamentCode)
+          && request.resource.data.passwordHash == null;
+      }
+    }
+
+    // ---------- device_links: uid → participant ----------
+    match /device_links/{linkUid} {
+      allow read: if signedIn() && linkUid == uid();
+      // יצירה/עדכון רק אם המכשיר הוכח בסיסמה: ה-uid כבר ב-cred.uids
+      allow create, update: if signedIn()
+        && linkUid == uid()
+        && credOf(request.resource.data.participantId).uids.hasAll([uid()]);
+      allow delete: if signedIn() && linkUid == uid();
+    }
+
+    // ---------- matches: לוח + תוצאות אמת ----------
+    match /matches/{matchDocId} {
+      allow read: if signedIn();
+      // תוצאות אמת: מנהל בלבד (homeScore/awayScore/advancing/status)
+      allow create, update: if isAdmin(request.resource.data.tournamentCode);
+      allow delete: if false;
+    }
+
+    function kickoffOf(tc, mid) {
+      return get(/databases/$(database)/documents/matches/$(tc + '__' + mid)).data.kickoffAt;
+    }
+
+    // ---------- predictions ----------
+    match /predictions/{predId} {
+      // קריאה: הבעלים תמיד; מנהל (לחישוב ניקוד/ייצוא); כולם אחרי שריקה (חשיפה אחרי נעילה)
+      allow read: if signedIn() && (
+        resource.data.ownerUid == uid()
+        || isAdmin(resource.data.tournamentCode)
+        || request.time >= kickoffOf(resource.data.tournamentCode, resource.data.matchId)
+      );
+      // כתיבה: בעלים מאושר, ורק לפני שריקת הפתיחה. אחרי kickoff — נעול, בלי עקיפה.
+      allow create, update: if signedIn()
+        && request.resource.data.ownerUid == uid()
+        && isApproved(request.resource.data.tournamentCode)
+        && request.time < kickoffOf(request.resource.data.tournamentCode, request.resource.data.matchId);
+      // FAMILY ADMIN — מנהל יכול ליצור/לעדכן ניחוש בכל זמן. פשוט ככל האפשר:
+      //   * תנאי יחיד: isAdmin. אין הגבלת זמן, אין enum, אין שדות חובה מעבר לכך.
+      //   * אין מחיקה.
+      allow create: if isAdmin(request.resource.data.tournamentCode);
+      allow update: if isAdmin(resource.data.tournamentCode);
+      allow delete: if false;
+    }
+
+    // ---------- predicted_flags: "כבר ניחש" — דגל פומבי בלי תוכן הניחוש ----------
+    match /predicted_flags/{flagId} {
+      allow read: if signedIn();
+      allow create, update: if signedIn()
+        && request.resource.data.participantId == myLink().participantId
+        && flagId == request.resource.data.participantId;
+      allow delete: if false;
+    }
+
+    // ---------- scores: ניקוד מחושב ----------
+    match /scores/{scoreId} {
+      allow read: if signedIn();
+      allow create, update: if isAdmin(request.resource.data.tournamentCode);
+      allow delete: if isAdmin(resource.data.tournamentCode);
+    }
+  }
+}
