@@ -164,6 +164,15 @@ function el(tag, className, text) {
   return n;
 }
 
+// חותמת זמן של Firestore → מילישניות. חסר/לא תקין → 0 (לעולם לא זורק).
+function millis(v) {
+  if (!v) return 0;
+  if (typeof v.toMillis === "function") return v.toMillis();
+  if (v.seconds != null) return Number(v.seconds) * 1000;
+  const t = Date.parse(v);
+  return Number.isFinite(t) ? t : 0;
+}
+
 // טוען את ערכי הניקוד מ-scoring-config (אם נכשל — ברירת מחדל זהה לקונפיג).
 async function loadScoring() {
   try { const m = await import("./scoring-config.js"); if (m && m.SCORING) return m.SCORING; } catch (e) {}
@@ -1157,12 +1166,21 @@ if (adminEl) {
     const computeScores = async (mid, winner) => {
       const preds = await getDocs(query(collection(db, "predictions"),
         where("tournamentCode", "==", code), where("matchId", "==", mid)));
-      let n = 0;
-      for (const d of preds.docs) {
+      // אותו אדם עלול לנחש מכמה מכשירים: מסמך predictions נפרד לכל ownerUid, אבל
+      // אותו participantId. לכן מקבצים לפי זהות המשתתף ובוחרים את הניחוש האחרון בזמן —
+      // אחרת הניקוד תלוי בסדר שרירותי של התוצאות כשהמכשירים סותרים.
+      const latest = new Map();
+      preds.forEach((d) => {
         const p = d.data();
-        const pts = p.pick === winner ? POINTS[winner] : 0;
         // מפתח לפי participantId (זהות יציבה) — מונע התנגשות כשכמה אנשים חולקים ownerUid.
         const key = p.participantId || p.ownerUid;
+        const ts = millis(p.updatedAt) || millis(p.createdAt) || 0;
+        const cur = latest.get(key);
+        if (!cur || ts >= cur.ts) latest.set(key, { p, ts });
+      });
+      let n = 0;
+      for (const [key, { p }] of latest) {
+        const pts = p.pick === winner ? POINTS[winner] : 0;
         await setDoc(doc(db, "scores", code + "__" + mid + "__" + key), {
           tournamentCode: code, matchId: mid, ownerUid: p.ownerUid, participantId: p.participantId || null,
           displayName: p.displayName, pick: p.pick || null, points: pts,
