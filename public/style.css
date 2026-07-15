@@ -681,46 +681,62 @@ button.mini.secondary { background: transparent; color: var(--accent-dark); bord
 .big-steps p { margin: 0.25rem 0; }
 
 /* ----- עץ גריד ----- */
-.card.bracket-card { max-width: 760px; }
+/* עמוד העץ רחב — הנוקאאוט צריך אוויר */
+.card.bracket-card { max-width: 1180px; }
 .legend { display: flex; gap: 1rem; justify-content: center; font-size: 0.8rem; color: var(--muted); margin: 0 0 0.75rem; }
-.bracket-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 132px);
-  gap: 0 18px;
-  min-width: 1032px;
-  direction: rtl;
-  align-items: center;
-}
-.b-col { display: flex; flex-direction: column; justify-content: space-around; gap: 0.55rem; height: 100%; }
-.b-card {
-  position: relative;
-  background: #f7f9fa; border: 1px solid var(--border); border-radius: 10px;
-  padding: 0.45rem 0.55rem; font-size: 0.8rem; text-align: right;
-}
-.b-card .dot { position: absolute; top: 0.3rem; left: 0.4rem; font-size: 0.7rem; }
-.b-card .t-row { padding: 0.15rem 0; font-weight: 600; }
-.b-card .t-row + .t-row { border-top: 1px dashed var(--border); }
-.b-card .t-row.tbd { color: var(--muted); font-weight: 400; }
-.b-card.open { border-color: #e3cf8b; background: #fdf9ec; }
-.b-card.final { background: #fdf6e3; border-color: #ecd9a0; }
-/* קו עדין שממשיך מכל כרטיס אל העמודה הבאה (RTL: שמאלה) */
-.b-card::after {
-  content: ""; position: absolute; left: -18px; top: 50%; width: 18px; height: 1px;
-  background: var(--border);
-}
-.b-col:last-child .b-card::after { display: none; }
 
-/* תוצאות שמורות בעץ — שורה עם שם+ציון, מנצחת מודגשת */
-.b-card .t-row.result { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-weight: 600; }
-.b-card .t-row.result .rb-score { font-family: var(--font-display); color: var(--accent-dark); }
-.b-card .t-row.winner { background: #e7f6ea; border-radius: 6px; padding-inline: 0.35rem; }
-.b-card .t-row.winner .rb-score { color: #1f7a3d; }
-.b-card .t-row.tie-note { color: var(--muted); font-weight: 400; font-size: 0.72rem; }
-.b-card .t-row.res-sep { color: var(--muted); font-weight: 700; font-size: 0.7rem; margin-top: 0.2rem; }
-.b-card.finished { border-color: #b9e3c4; background: #f3fbf5; }
-/* כל משחק שהסתיים בבית = קופסה נפרדת, כדי ששני משחקי תיקו לא ייראו כרשימה אחת */
-.b-card .g-result { border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 0.15rem 0.4rem; margin-top: 0.3rem; }
-.b-card .g-result .t-row + .t-row { border-top: 1px dashed var(--border); }
+.section-head { font-family: var(--font-display); font-size: 1.15rem; margin: 1.6rem 0 0.15rem; text-align: center; }
+.section-sub { text-align: center; color: var(--muted); font-size: 0.75rem; margin: 0 0 0.8rem; }
+
+/* ----- שלב הנוקאאוט: העץ. עמודה לכל שלב; אין קווי חיבור (ההזנה כאן אינה ההעמדה האמיתית) ----- */
+.bracket-grid {
+  display: flex; gap: 14px; direction: rtl; align-items: stretch;
+  min-width: 940px; padding-bottom: 0.25rem;
+}
+.ko-col { flex: 1 1 0; min-width: 172px; display: flex; flex-direction: column; }
+.ko-col .round-title { margin-bottom: 0.5rem; }
+.ko-list { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 0.4rem; }
+.ko-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.3rem 0.45rem; font-size: 0.8rem;
+}
+.ko-card.done { border-color: #b9e3c4; }
+.ko-card.pending { background: #fafbfc; border-style: dashed; }
+.ko-card.final { background: #fdf6e3; border-color: var(--gold); box-shadow: 0 2px 10px rgba(217,169,63,0.18); }
+.ko-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.2rem 0; }
+.ko-row + .ko-row { border-top: 1px dashed var(--border); }
+.ko-team { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ko-score { font-family: var(--font-display); color: var(--muted); flex-shrink: 0; }
+.ko-row.win { background: var(--accent-soft); border-radius: 6px; padding-inline: 0.3rem; }
+.ko-row.win .ko-score { color: var(--accent-dark); }
+.ko-row.tbd .ko-team { color: var(--muted); font-weight: 400; }
+.ko-note { font-size: 0.68rem; color: var(--muted); text-align: center; padding-top: 0.15rem; }
+.ko-note.pend { font-style: italic; }
+.third-wrap { max-width: 260px; margin: 1.2rem auto 0; }
+
+/* ----- שלב הבתים: רשת קומפקטית, שורה אחת למשחק ----- */
+.groups-grid {
+  display: grid; gap: 0.7rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.grp-card { background: #fdfbf4; border: 1px solid #e8dcb8; border-radius: 12px; padding: 0.5rem 0.6rem; }
+.grp-title { font-family: var(--font-display); font-size: 0.9rem; margin: 0 0 0.35rem; color: var(--accent-dark); }
+.grp-line {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.4rem;
+  padding: 0.22rem 0; font-size: 0.78rem;
+}
+.grp-line + .grp-line { border-top: 1px dashed #e8dcb8; }
+.gl-team { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+.gl-team:first-child { text-align: right; }
+.gl-team:last-child { text-align: left; }
+.gl-team.win { color: var(--text); font-weight: 700; }
+.gl-score { font-family: var(--font-display); font-size: 0.8rem; color: var(--accent-dark); white-space: nowrap; }
+.grp-line.pending .gl-score { color: var(--muted); }
+
+@media (max-width: 640px) {
+  .groups-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  .section-head { font-size: 1rem; }
+}
 
 /* 🔥 המשחקים הבאים — מסך בית */
 .next-match { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }

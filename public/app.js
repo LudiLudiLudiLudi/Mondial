@@ -428,84 +428,72 @@ if (bracketGrid) {
         const winner = m.stage !== "group" ? (s.advancing || (h === a ? null : (h > a ? "home" : "away"))) : (h > a ? "home" : h < a ? "away" : null);
         return { h, a, winner, tie: h === a };
       };
-      // שתי שורות תוצאה למשחק שהסתיים — מנצחת מודגשת עם 🏆; תיקו בנוקאאוט → הערה.
-      const appendResultRows = (card, m, res) => {
-        const teamRow = (side, name, score) => {
-          const win = res.winner === side;
-          const row = el("div", "t-row result" + (win ? " winner" : ""));
-          row.appendChild(el("span", "rb-team", (win ? "🏆 " : "") + withFlag(name)));
-          row.appendChild(el("span", "rb-score", String(score)));
-          return row;
-        };
-        card.appendChild(teamRow("home", m.home, res.h));
-        card.appendChild(teamRow("away", m.away, res.a));
-        // הערת "הכרעה לא נקבעה" שייכת רק לנוקאאוט עם תיקו בלי advancing.
-        // תיקו בשלב הבתים הוא תוצאה תקפה — בלי הערה ובלי 🏆.
-        if (res.tie && !res.winner && m.stage !== "group") card.appendChild(el("div", "t-row tie-note", "הכרעה עדיין לא נקבעה"));
-      };
-
-      // עמודת שלב הבתים — 12 בתים אמיתיים עם 4 נבחרות
-      const groups = {};
-      ms.filter((m) => m.stage === "group").forEach((m) => {
-        const g = groups[m.group] || (groups[m.group] = new Set());
-        g.add(m.home); g.add(m.away);
-      });
-      const colGroups = el("section", "b-col");
-      colGroups.appendChild(el("h2", "round-title", "שלב הבתים"));
-      const groupMatches = {};
-      ms.filter((m) => m.stage === "group").forEach((m) => { (groupMatches[m.group] = groupMatches[m.group] || []).push(m); });
-      Object.keys(groups).sort().forEach((g) => {
-        const card = el("div", "b-card open");
-        card.appendChild(el("span", "dot", "🟢"));
-        card.appendChild(el("div", "t-row", "בית " + g));
-        [...groups[g]].forEach((t) => card.appendChild(el("div", "t-row tbd", withFlag(t))));
-        // תוצאות שהסתיימו בבית — מוצגות מהשרת בלבד.
-        const finishedInGroup = (groupMatches[g] || []).map((m) => [m, resultOf(m)]).filter(([, r]) => r);
-        if (finishedInGroup.length) {
-          card.appendChild(el("div", "t-row res-sep", "תוצאות"));
-          finishedInGroup.forEach(([m, res]) => {
-            const line = el("div", "g-result");
-            appendResultRows(line, m, res);
-            card.appendChild(line);
-          });
-        }
-        colGroups.appendChild(card);
-      });
-      bracketGrid.appendChild(colGroups);
-
-      // עמודות נוקאאוט — בלי "טרם נקבע": שלבים עמוקים מקבלים "מנצחת משחק X"
-      // לפי זיווג סדרתי של מספרי המשחקים מהסיבוב הקודם (placeholder עד הגרלה בפועל).
-      const KO = [["r32", "32 האחרונות", "🟡"], ["r16", "שמינית גמר", "⚪"], ["qf", "רבע גמר", "⚪"], ["sf", "חצי גמר", "⚪"], ["third", "מקום 3", "⚪"], ["final", "🏆 גמר", "⚪"]];
       const byStage = {};
       ms.forEach((m) => (byStage[m.stage] = byStage[m.stage] || []).push(m));
       Object.values(byStage).forEach((l) => l.sort((a, b) => a.id.localeCompare(b.id)));
-      const FEED = { r16: "r32", qf: "r16", sf: "qf", final: "sf", third: "sf" };
-      const mnum = (m) => String(Number(m.id.slice(1)));
-      const slotLabel = (stage, i, side) => {
-        const prev = byStage[FEED[stage]] || [];
-        if (stage === "third") return "מפסידת משחק " + (prev[i * 2 + side] ? mnum(prev[i * 2 + side]) : "");
-        const f = prev[i * 2 + side];
-        return f ? "מנצחת משחק " + mnum(f) : "";
+
+      // ----- שלב הנוקאאוט: העץ עצמו. עמודה לכל שלב, כרטיס לכל משחק. -----
+      // אין קווי חיבור: מבנה ההזנה כאן אינו ההעמדה האמיתית, ולא נרמז על התקדמות שגויה.
+      const koRow = (m, res, side) => {
+        const name = side === "home" ? m.home : m.away;
+        const tbd = name === "טרם נקבע";
+        const win = res && res.winner === side;
+        const row = el("div", "ko-row" + (win ? " win" : "") + (tbd ? " tbd" : ""));
+        row.appendChild(el("span", "ko-team", (win ? "🏆 " : "") + (tbd ? "טרם נקבע" : withFlag(name))));
+        row.appendChild(el("span", "ko-score", res ? String(side === "home" ? res.h : res.a) : "–"));
+        return row;
       };
-      for (const [stage, title, dot] of KO) {
-        const col = el("section", "b-col");
-        col.appendChild(el("h2", "round-title", title));
-        (byStage[stage] || []).forEach((m, i) => {
+      const KO = [["r32", "32 האחרונות"], ["r16", "שמינית גמר"], ["qf", "רבע גמר"], ["sf", "חצי גמר"], ["final", "🏆 גמר"]];
+      for (const [stage, title] of KO) {
+        const col = el("section", "ko-col ko-" + stage);
+        col.appendChild(el("h3", "round-title", title));
+        const list = el("div", "ko-list");
+        (byStage[stage] || []).forEach((m) => {
           const res = resultOf(m);
-          const card = el("div", "b-card" + (stage === "final" ? " final" : "") + (res ? " finished" : ""));
-          card.appendChild(el("span", "dot", res ? "🏁" : dot));
-          if (res) {
-            // משחק שהסתיים — תוצאה שמורה בלבד, בלי חישוב מנצחת מחדש.
-            appendResultRows(card, m, res);
-          } else {
-            const homeLabel = m.home === "טרם נקבע" ? slotLabel(stage, i, 0) : withFlag(m.home);
-            const awayLabel = m.away === "טרם נקבע" ? slotLabel(stage, i, 1) : withFlag(m.away);
-            card.appendChild(el("div", "t-row tbd", homeLabel || m.home));
-            card.appendChild(el("div", "t-row tbd", awayLabel || m.away));
-          }
-          col.appendChild(card);
+          const card = el("div", "ko-card" + (stage === "final" ? " final" : "") + (res ? " done" : " pending"));
+          card.appendChild(koRow(m, res, "home"));
+          card.appendChild(koRow(m, res, "away"));
+          if (res && res.tie && res.winner) card.appendChild(el("div", "ko-note", "הוכרע בפנדלים"));
+          if (!res) card.appendChild(el("div", "ko-note pend", "טרם שוחק"));
+          list.appendChild(card);
         });
+        col.appendChild(list);
         bracketGrid.appendChild(col);
+      }
+      // מקום 3 — לא חלק מהעץ; מוצג בנפרד מתחתיו.
+      const thirdWrap = document.getElementById("third-place");
+      if (thirdWrap) {
+        thirdWrap.textContent = "";
+        (byStage["third"] || []).forEach((m) => {
+          const res = resultOf(m);
+          const card = el("div", "ko-card third" + (res ? " done" : " pending"));
+          card.appendChild(koRow(m, res, "home"));
+          card.appendChild(koRow(m, res, "away"));
+          if (!res) card.appendChild(el("div", "ko-note pend", "טרם שוחק"));
+          thirdWrap.appendChild(card);
+        });
+      }
+
+      // ----- שלב הבתים: רשת קומפקטית, שורה אחת למשחק. מחוץ לעץ. -----
+      const groupsGrid = document.getElementById("groups-grid");
+      if (groupsGrid) {
+        groupsGrid.textContent = "";
+        const groupMatches = {};
+        (byStage["group"] || []).forEach((m) => { (groupMatches[m.group] = groupMatches[m.group] || []).push(m); });
+        Object.keys(groupMatches).sort().forEach((g) => {
+          const card = el("div", "grp-card");
+          card.appendChild(el("h3", "grp-title", "בית " + g));
+          groupMatches[g].forEach((m) => {
+            const res = resultOf(m);
+            const line = el("div", "grp-line" + (res ? "" : " pending"));
+            const hw = res && res.winner === "home", aw = res && res.winner === "away";
+            line.appendChild(el("span", "gl-team" + (hw ? " win" : ""), withFlag(m.home)));
+            line.appendChild(el("span", "gl-score", res ? res.h + "–" + res.a : "–"));
+            line.appendChild(el("span", "gl-team" + (aw ? " win" : ""), withFlag(m.away)));
+            card.appendChild(line);
+          });
+          groupsGrid.appendChild(card);
+        });
       }
     } catch (e) {
       bracketGrid.textContent = "";
